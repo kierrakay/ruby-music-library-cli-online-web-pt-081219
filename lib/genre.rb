@@ -1,12 +1,12 @@
 class Genre 
   
+   #extend Concerns::Findable
   
   attr_accessor :name 
   @@all = []
   
   def initialize(name)
     @name = name
-    @@all << self
     @songs = []
     save
   end
@@ -17,7 +17,7 @@ class Genre
   
     
   def self.destroy_all
-    self.all.clear
+   @@all.clear
   end
 
   def save
@@ -26,7 +26,7 @@ class Genre
   
   def self.create(name)
     self.new(name).tap do |genre|
-    genre.save
+   # genre.save
     end
   end
   

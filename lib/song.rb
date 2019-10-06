@@ -1,11 +1,11 @@
+  require 'pry'
+
 class Song 
-  
   attr_accessor :name, :artist, :genre
   @@all = []
   
   def initialize(name,artist=nil, genre=nil)
     @name = name
-    @@all << self 
     self.artist = artist if artist != nil
     self.genre = genre if genre != nil
     save
@@ -17,7 +17,7 @@ class Song
   end
   
   def self.destroy_all
-    self.all.clear
+   @@all.clear
   end
 
   def save
@@ -26,7 +26,7 @@ class Song
   
   def self.create(name)
     self.new(name).tap do |song|
-      song.save
+     # song.save dont need otherwise song being save in too many places we have the save method to do this.
     end
   end
   
@@ -43,12 +43,14 @@ class Song
 end
 
   def self.find_by_name(name)
-    self.all.find {|song| song.name == name}
-     # self.all.detect {|song| song.name == name}
+    @@all.find {|song| song.name == name}
+
   end 
   
   def self.find_or_create_by_name(name)
- self.find(name)? self.find(name):  Artist.new(name) 
+   #self.all.find_or_create_by_name(name)? self.all.find_by_or_create_by_name(name):  Artist.new(name)
+   find_by_name(name) || create(name)
+  
   end
   end  
  

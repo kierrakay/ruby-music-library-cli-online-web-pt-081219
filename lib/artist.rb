@@ -1,4 +1,7 @@
+
 class Artist 
+  
+#extend Concerns::Findable
   
   attr_accessor :name
   @@all = []
@@ -6,7 +9,6 @@ class Artist
   
   def initialize(name)
     @name = name
-    @@all << self
     @songs =[]
 
     save
@@ -18,7 +20,7 @@ class Artist
   
     
   def self.destroy_all
-    self.all.clear
+    @@all.clear
   end
 
   def save
@@ -27,7 +29,7 @@ class Artist
   
   def self.create(name)
     self.new(name).tap do |artist|
-      artist.save
+     # artist.save
     end
   end
   
@@ -41,13 +43,14 @@ class Artist
 end
 
 def genres 
-     #self.songs.collect {|song| song.genre} 
      
-     #returns a collection of genres for all of the artist's songs (artist has many genres through songs)
-     
-    songs.collect {|song| song.genre}.uniq 
+    self.songs.collect {|song| song.genre}.uniq 
     
       # does not return duplicate genres if the artist has more than one song of a particular genre (artist has many genres through songs) 
+      
+          #self.songs.collect {|song| song.genre} 
+     
+    #returns a collection of genres for all of the artist's songs (artist has many genres through songs)
 end
 end
 
